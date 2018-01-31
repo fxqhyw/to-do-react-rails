@@ -1,0 +1,11 @@
+.Project {
+    text-align: center;
+    -webkit-flex: none;
+    flex: none;
+    width: 50%;
+    margin: 0 auto;
+    background: lightyellow;
+    float: none;
+    font-size: 11px;
+    text-align: left;
+  }

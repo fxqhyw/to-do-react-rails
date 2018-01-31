@@ -1,0 +1,12 @@
+.Task {
+    text-align: center;
+    -webkit-flex: none;
+    flex: none;
+    width: 50%;
+    margin: 5px;
+    background: plum;
+    float: none;
+    font-size: 11px;
+    text-align: left;
+    padding: 10px;
+  }
