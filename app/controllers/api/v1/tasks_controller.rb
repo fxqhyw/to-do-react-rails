@@ -1,29 +1,37 @@
 module Api::V1
   class TasksController < ApplicationController
-    def create
-      @task = Task.create(task_params)
-      render json: @task
-    end
 
     def index
       @tasks = Task.order("created_at DESC")
-      render json: @tasks
+
+      render json: @tasks, status: :ok
+    end
+
+    def create
+      @task = Task.create(task_params)
+
+      render json: @task, status: :created
     end
 
     def update
       @task = Task.find(params[:id])
       @task.update_attributes(task_params)
-      render json: @idea
+
+      render json: @task, status: :updated
     end
 
     def destroy
       @task = Task.find(params[:id])
-      @task.destroy
+      if @task.destroy
+        head(:ok)
+      else
+        head(:unprocessable_entity)
+      end
     end
 
     private
-    def task_params
-      params.require(:task).permit(:id, :name, :done, :deadline, :project_id)
-    end
+      def task_params
+        params.require(:task).permit(:id, :name, :done, :deadline, :project_id)
+      end
   end
 end
