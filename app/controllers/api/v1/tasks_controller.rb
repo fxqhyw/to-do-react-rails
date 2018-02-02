@@ -17,7 +17,7 @@ module Api::V1
       @task = Task.find(params[:id])
       @task.update_attributes(task_params)
 
-      render json: @task, status: :updated
+      render json: @task
     end
 
     def destroy

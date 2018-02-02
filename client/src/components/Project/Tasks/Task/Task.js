@@ -6,6 +6,7 @@ import { SortableHandle } from 'react-sortable-hoc';
 import './Task.css';
 import EditTaskForm from './EditTaskForm/EditTaskForm';
 import Deadline from './Deadline/Deadline';
+import DeadlinePicker from './DeadlinePicker/DeadlinePicker';
 
 class Task extends Component {
     constructor(props) {
@@ -102,6 +103,7 @@ class Task extends Component {
                 <button onClick={this.delete}>Delete Task</button>
                 <DragHandle />
                 <DatePicker
+                    customInput={<DeadlinePicker />}
                     onSelect={this.handleSelectDeadline}
                     />
             </li>

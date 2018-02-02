@@ -16,7 +16,7 @@ module Api::V1
       @project = Project.find(params[:id])
       @project.update_attributes(project_params)
 
-      render json: @project, status: :updated
+      render json: @project
     end
 
     def destroy
@@ -30,7 +30,7 @@ module Api::V1
 
     private
       def project_params
-        params.require(:project).permit(:name)
+        params.require(:project).permit(:id, :name)
       end
   end
 end
