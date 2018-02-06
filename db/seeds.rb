@@ -5,6 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-projects = Project.create([{name: 'Projject'}, {name: 'Projject2'}, {name: 'Projject3'}, {name: 'Projject4'}])
-tasks = Task.create([{name: '11111', done: false, project_id: 1}, {name: '2222', done: false, project_id: 1}, {name: '33333', done: false, project_id: 1},
-  {name: 'Loker!', done: false, project_id: 2}, {name: 'Lokerr!', done: false, project_id: 2}, {name: 'Lokertq!', done: false, project_id: 2}])
+#User.create(id: 1, email: 'loker@lol.com', password: '123456')
+User.create(id: 2, email: 'loker2@lol.com', password: '123456')
+

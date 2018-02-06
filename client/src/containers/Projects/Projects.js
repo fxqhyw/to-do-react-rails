@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import update from 'immutability-helper';
+import jwtDecode from 'jwt-decode';
 
 import Project from '../../components/Project/Project';
 import ProjectForm from '../../components/ProjectForm/ProjectForm';
@@ -12,6 +13,7 @@ class Projects extends Component {
         super ();
         this.state = {
             term: '',
+            user_id: '',
             editingProjectId: null,
             editingTaskId: null,
             projects: [],
@@ -22,16 +24,17 @@ class Projects extends Component {
     }
     
     componentDidMount = () => {
+        let jwt = window.localStorage.getItem('jwt');
+        let result = jwtDecode(jwt);
+        this.setState({user_id: result.id})
         axios.get('http://localhost:3001/api/v1/projects')
             .then(response => {
-                console.log(response);
                 this.setState({projects: response.data})
             })
             .catch(error => console.log(error));
 
-            axios.get('http://localhost:3001/api/v1/tasks')
+        axios.get('http://localhost:3001/api/v1/tasks')
             .then(response => {
-                console.log(response);
                 this.setState({tasks: response.data})
             })
             .catch(error => console.log(error));
@@ -46,7 +49,8 @@ class Projects extends Component {
             'http://localhost:3001/api/v1/projects',
                 { project:
                     {
-                        name: this.state.term
+                        name: this.state.term,
+                        user_id: this.state.user_id
                     }
                 }
             )
@@ -141,22 +145,27 @@ class Projects extends Component {
     render() {        
         return (
             <div>
-                {this.state.projects.map((project, i) => (
-                    <Project 
-                        key={i}
-                        projectId={project.id}
-                        name={project.name}
-                        tasks={this.state.tasks}
-                        deleteProject={this.deleteProjectHandler}
-                        submitTask={this.addTaskHandler}
-                        deleteTask={this.deleteTaskHandler}
-                        showEditProjectForm={this.showEditProjectFormHandler}
-                        showEditTaskForm={this.showEditTaskFormHandler}
-                        editProject={this.editProjectHandler}
-                        editTask={this.editTaskHandler}
-                        editingProjectId={this.state.editingProjectId}
-                        editingTaskId={this.state.editingTaskId}
-                    />))}
+                {this.state.projects.map((project, i) => {
+                    if(this.state.user_id === project.user_id)
+                        return (
+                            <Project 
+                            key={i}
+                            projectId={project.id}
+                            name={project.name}
+                            userId={this.state.user_id}
+                            tasks={this.state.tasks}
+                            deleteProject={this.deleteProjectHandler}
+                            submitTask={this.addTaskHandler}
+                            deleteTask={this.deleteTaskHandler}
+                            showEditProjectForm={this.showEditProjectFormHandler}
+                            showEditTaskForm={this.showEditTaskFormHandler}
+                            editProject={this.editProjectHandler}
+                            editTask={this.editTaskHandler}
+                            editingProjectId={this.state.editingProjectId}
+                            editingTaskId={this.state.editingTaskId}
+                        />);
+                    return null;
+                })}
 
                 <ProjectForm 
                     onSubmit={this.addProjectHandler}

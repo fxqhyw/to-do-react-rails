@@ -30,7 +30,7 @@ module Api::V1
 
     private
       def project_params
-        params.require(:project).permit(:id, :name)
+        params.require(:project).permit(:name, :user_id)
       end
   end
 end

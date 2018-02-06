@@ -48,7 +48,8 @@ class Project extends Component {
     editProject = (event) => {
         const project = {
             id: this.props.projectId,
-            name: event.target.value
+            name: event.target.value,
+            user_id: this.props.userId
         };
         this.props.editProject(project);
         event.preventDefault();
