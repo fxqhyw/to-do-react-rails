@@ -45,6 +45,7 @@ class Projects extends Component {
     }
 
     addProjectHandler = (event) => {
+        event.preventDefault();
             axios.post(
             'http://localhost:3001/api/v1/projects',
                 { project:
@@ -63,7 +64,6 @@ class Projects extends Component {
                     term: ''});
             })
             .catch(error => console.log(error));
-            event.preventDefault();
     }
 
     addTaskHandler = (task) => {        
