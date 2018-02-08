@@ -76,6 +76,7 @@ class SignUp extends Component {
     render () {
         return (
             <div className="Signup">
+                    <FormErrors formErrors={this.state.formErrors} />
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="email" bsSize="large">
                         <ControlLabel>Email</ControlLabel>

@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
-import Login from './components/Login/Login';
-import SignUp from './components/SignUp/SignUp';
-import Projects from './containers/Projects/Projects';
+import { BrowserRouter } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import Routes from './Routes';
 import './App.css';
 
 class App extends Component {
+
   render() {
 
     return (
-         <Router>
-         <div >
-         <Route exact path='/' component={Login} />
-         <Route exact path='/welcome' component={Projects} />
-           </div>     
-
-         </Router>
-      
+      <BrowserRouter>
+          <div>
+          <Navbar />
+          <Routes />
+          </div>
+        </BrowserRouter>
     );
   }
 }

@@ -8,6 +8,11 @@ class Login extends Component {
         email: '',
         password: ''
     };
+    componentWillMount = () => {
+        if (window.localStorage.getItem('jwt')) {
+            this.props.history.push('/welcome');
+        }
+    }
 
     handleUserInput = (event) => {
         const name = event.target.name;

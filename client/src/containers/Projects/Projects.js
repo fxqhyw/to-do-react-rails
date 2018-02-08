@@ -22,7 +22,7 @@ class Projects extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.addProjectHandler = this.addProjectHandler.bind(this);
     }
-    
+
     componentDidMount = () => {
         let jwt = window.localStorage.getItem('jwt');
         let result = jwtDecode(jwt);
@@ -145,6 +145,10 @@ class Projects extends Component {
     render() {        
         return (
             <div>
+                {this.state.user_id ?<ProjectForm 
+                                        onSubmit={this.addProjectHandler}
+                                        onChange={this.handleChange}
+                                        value={this.state.term}/> : null}
                 {this.state.projects.map((project, i) => {
                     if(this.state.user_id === project.user_id)
                         return (
@@ -162,16 +166,12 @@ class Projects extends Component {
                             editProject={this.editProjectHandler}
                             editTask={this.editTaskHandler}
                             editingProjectId={this.state.editingProjectId}
-                            editingTaskId={this.state.editingTaskId}
-                        />);
+                            editingTaskId={this.state.editingTaskId} />
+                        );
                     return null;
                 })}
-
-                <ProjectForm 
-                    onSubmit={this.addProjectHandler}
-                    onChange={this.handleChange}
-                    value={this.state.term} />
-            </div>            
+            </div>
+                       
         );
     }
 }
