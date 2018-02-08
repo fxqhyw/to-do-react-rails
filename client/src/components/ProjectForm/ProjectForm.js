@@ -10,7 +10,7 @@ const projectForm = (props) => (
             Name:
         <input type="text" value={props.value} onChange={props.onChange} />
         </label>
-        <input className="New" type="submit" value="Submit" />
+        <input className="New" type="submit" value="Submit" disabled={!props.value} />
     </form>   
 );
 

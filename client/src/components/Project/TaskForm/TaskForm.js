@@ -6,7 +6,7 @@ const taskForm = (props) => (
         Task:
         </label>
     <input type="text" value={props.value} onChange={props.onChange} />
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Submit" disabled={!props.value}/>
     </form>
 );
 

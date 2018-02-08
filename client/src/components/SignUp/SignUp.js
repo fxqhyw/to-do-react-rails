@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+
 
 import FormErrors from './FormErrors';
 import './SignUp.css';
@@ -13,7 +15,7 @@ class SignUp extends Component {
         emailValid: false,
         passwordValid: false,
         formValid: false
-      };
+    };
 
     handleUserInput = (event) => {
         const name = event.target.name;
@@ -35,7 +37,7 @@ class SignUp extends Component {
             }    
         )
         .then(response => {
-            console.log(response);
+            alert("You are successfuly register");
         })
         .catch(error => console.log(error));
     }
@@ -73,26 +75,34 @@ class SignUp extends Component {
 
     render () {
         return (
-            <form className="demoForm" onSubmit={this.handleSubmit}>
-            <h2>Sign up</h2>
-                <div className="panel panel-default">
-                    <FormErrors formErrors={this.state.formErrors} />
-                </div>
-                <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-                    <label htmlFor="email">Email address</label>
-                    <input type="email" className="form-control"
-                    name="email" value={this.state.email} onChange={this.handleUserInput}/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" className="form-control"
-                        name="password" value={this.state.password} onChange={this.handleUserInput}/>
-                </div>
-            <button type="submit" className="btn btn-primary" disabled={!this.state.formValid}>
-                Sign up
-            </button>
-            </form>
+            <div className="Signup">
+                <form onSubmit={this.handleSubmit}>
+                    <FormGroup controlId="email" bsSize="large">
+                        <ControlLabel>Email</ControlLabel>
+                        <FormControl
+                        autoFocus
+                        name="email"
+                        type="email"
+                        value={this.state.email}
+                        onChange={this.handleUserInput} />
+                    </FormGroup>
+                    <FormGroup controlId="password" bsSize="large">
+                        <ControlLabel>Password</ControlLabel>
+                        <FormControl
+                        type="password"
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.handleUserInput} />
+                    </FormGroup>
+                    <Button type="submit"
+                    block
+                    bsSize="large"
+                    disabled={!this.state.formValid}>
+                        Sign up
+                    </Button>
+                </form>
+            </div>
         );
     }
-    }
+}
 export default SignUp;
