@@ -2,7 +2,8 @@ module Api::V1
   class UsersController < ApplicationController
 
    def show
-       @User = User.find(params[:id])
+       @user = User.find(params[:id])
+       json_response(@user)
    end
 
     def create

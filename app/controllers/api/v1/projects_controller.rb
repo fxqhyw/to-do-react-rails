@@ -1,40 +1,39 @@
 module Api::V1
   class ProjectsController < ApplicationController
-    def index
-      @user = User.find(params[:user_id])
-      @projects = @user.projects.order("created_at DESC")
+    before_action :set_user
+    before_action :set_project, only: [:update, :destroy]
 
-      render json: @projects, status: :ok
+    def index
+      @projects = @user.projects.order("created_at DESC")
+      json_response(@projects)
     end
 
     def create
-      @user = User.find(params[:user_id])
-      @project = @user.projects.create(project_params)
-
-      render json: @project, status: :created
+      @project = @user.projects.create!(project_params)
+      json_response(@project, :created)
     end
 
     def update
-      @user = User.find(params[:user_id])
-      @project = @user.projects.find(params[:id])
       @project.update_attributes(project_params)
-
-      render json: @project
+      head :no_content
     end
 
     def destroy
-      @user = User.find(params[:user_id])
-      @project = @user.projects.find(params[:id])
-      if @project.destroy
-        head(:ok)
-      else
-        head(:unprocessable_entity)
-      end
+      @project.destroy
+      head :no_content
     end
 
     private
       def project_params
         params.require(:project).permit(:name)
+      end
+
+      def set_user
+        @user = User.find(params[:user_id])
+      end
+
+      def set_project
+        @project = @user.projects.find(params[:id])
       end
   end
 end
