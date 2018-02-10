@@ -2,26 +2,30 @@ module Api::V1
   class TasksController < ApplicationController
 
     def index
-      @tasks = Task.order("created_at DESC")
+      @user = User.find(params[:user_id])
+      @tasks = @user.tasks.order("created_at DESC")
 
       render json: @tasks, status: :ok
     end
 
     def create
-      @task = Task.create(task_params)
+      @user = User.find(params[:user_id])
+      @task = @user.tasks.create(task_params)
 
       render json: @task, status: :created
     end
 
     def update
-      @task = Task.find(params[:id])
+      @user = User.find(params[:user_id])
+      @task = @user.tasks.find(params[:id])
       @task.update_attributes(task_params)
 
       render json: @task
     end
 
     def destroy
-      @task = Task.find(params[:id])
+      @user = User.find(params[:user_id])
+      @task = @user.tasks.find(params[:id])
       if @task.destroy
         head(:ok)
       else

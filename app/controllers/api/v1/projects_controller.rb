@@ -1,26 +1,30 @@
 module Api::V1
   class ProjectsController < ApplicationController
     def index
-      @projects = Project.all
+      @user = User.find(params[:user_id])
+      @projects = @user.projects.order("created_at DESC")
 
       render json: @projects, status: :ok
     end
 
     def create
-      @project = Project.create(project_params)
+      @user = User.find(params[:user_id])
+      @project = @user.projects.create(project_params)
 
       render json: @project, status: :created
     end
 
     def update
-      @project = Project.find(params[:id])
+      @user = User.find(params[:user_id])
+      @project = @user.projects.find(params[:id])
       @project.update_attributes(project_params)
 
       render json: @project
     end
 
     def destroy
-      @project = Project.find(params[:id])
+      @user = User.find(params[:user_id])
+      @project = @user.projects.find(params[:id])
       if @project.destroy
         head(:ok)
       else
@@ -30,7 +34,7 @@ module Api::V1
 
     private
       def project_params
-        params.require(:project).permit(:name, :user_id)
+        params.require(:project).permit(:name)
       end
   end
 end

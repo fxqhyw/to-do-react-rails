@@ -26,14 +26,15 @@ class Projects extends Component {
     componentDidMount = () => {
         let jwt = window.localStorage.getItem('jwt');
         let result = jwtDecode(jwt);
-        this.setState({user_id: result.id})
-        axios.get('http://localhost:3001/api/v1/projects')
+        const user_id = result.id;
+        this.setState({user_id: result.id});
+        axios.get(`http://localhost:3001/api/v1/users/${user_id}/projects`)
             .then(response => {
                 this.setState({projects: response.data})
             })
             .catch(error => console.log(error));
 
-        axios.get('http://localhost:3001/api/v1/tasks')
+        axios.get(`http://localhost:3001/api/v1/users/${user_id}/tasks`)
             .then(response => {
                 this.setState({tasks: response.data})
             })
@@ -46,12 +47,12 @@ class Projects extends Component {
 
     addProjectHandler = (event) => {
         event.preventDefault();
+        const user_id = this.state.user_id;
             axios.post(
-            'http://localhost:3001/api/v1/projects',
+            `http://localhost:3001/api/v1/users/${user_id}/projects`,
                 { project:
                     {
                         name: this.state.term,
-                        user_id: this.state.user_id
                     }
                 }
             )
@@ -66,9 +67,10 @@ class Projects extends Component {
             .catch(error => console.log(error));
     }
 
-    addTaskHandler = (task) => {        
+    addTaskHandler = (task) => {
+        const user_id = this.state.user_id;        
         axios.post(
-        'http://localhost:3001/api/v1/tasks',
+        `http://localhost:3001/api/v1/users/${user_id}/tasks`,
             { 
                 task
             }
@@ -92,7 +94,8 @@ class Projects extends Component {
     }
 
     editProjectHandler = (project) => {
-        axios.put(`http://localhost:3001/api/v1/projects/${project.id}`,
+        const user_id = this.state.user_id; 
+        axios.put(`http://localhost:3001/api/v1/users/${user_id}/projects/${project.id}`,
         {
             project: project
         })
@@ -108,7 +111,8 @@ class Projects extends Component {
     }
 
     editTaskHandler = (task) => {
-        axios.put(`http://localhost:3001/api/v1/tasks/${task.id}`,
+        const user_id = this.state.user_id;
+        axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${task.id}`,
         {
             task: task
         })
@@ -123,7 +127,8 @@ class Projects extends Component {
     }
      
     deleteProjectHandler = (id) => {
-        axios.delete(`http://localhost:3001/api/v1/projects/${id}`)
+        const user_id = this.state.user_id;
+        axios.delete(`http://localhost:3001/api/v1/users/${user_id}/projects/${id}`)
         .then(response => {
             const projectIndex = this.state.projects.findIndex(x => x.id === id);
             const projects = update(this.state.projects, {$splice: [[projectIndex, 1]]});
@@ -133,7 +138,8 @@ class Projects extends Component {
     }
 
     deleteTaskHandler = (id) => {
-        axios.delete(`http://localhost:3001/api/v1/tasks/${id}`)
+        const user_id = this.state.user_id;
+        axios.delete(`http://localhost:3001/api/v1/users/${user_id}/tasks/${id}`)
         .then(response => {
             const tasksIndex = this.state.tasks.findIndex(x => x.id === id);
             const tasks = update(this.state.tasks, {$splice: [[tasksIndex, 1]]});
@@ -145,12 +151,11 @@ class Projects extends Component {
     render() {        
         return (
             <div>
-                {this.state.user_id ?<ProjectForm 
+                {this.state.user_id ? <ProjectForm 
                                         onSubmit={this.addProjectHandler}
                                         onChange={this.handleChange}
                                         value={this.state.term}/> : null}
                 {this.state.projects.map((project, i) => {
-                    if(this.state.user_id === project.user_id)
                         return (
                             <Project 
                             key={i}
@@ -168,7 +173,6 @@ class Projects extends Component {
                             editingProjectId={this.state.editingProjectId}
                             editingTaskId={this.state.editingTaskId} />
                         );
-                    return null;
                 })}
             </div>
                        

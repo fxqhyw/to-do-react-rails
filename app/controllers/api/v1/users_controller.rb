@@ -1,5 +1,10 @@
 module Api::V1
   class UsersController < ApplicationController
+
+   def show
+       @User = User.find(params[:id])
+   end
+
     def create
       @input = User.new(user_params)
       if(@input.save)
