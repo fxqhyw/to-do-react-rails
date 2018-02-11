@@ -11,10 +11,6 @@ import DeadlinePicker from './DeadlinePicker/DeadlinePicker';
 class Task extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-          done: false,
-          deadline: null
-        };
     
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectDeadline = this.handleSelectDeadline.bind(this);
@@ -22,9 +18,20 @@ class Task extends Component {
       }
 
     handleInputChange = (event) => {
+        event.preventDefault();
+
+        const done = event.target.checked;
         this.setState({
-            [event.target.name]: event.target.checked
+            done: done
         });
+        const task = {
+            id: this.props.task.id,
+            name: this.props.task.name,
+            done: done,
+            deadline: this.props.task.deadline,
+            project_id: this.props.task.project_id
+        };
+        this.props.editTask(task);
     }
 
     handleSelectDeadline = (date) => {
@@ -32,9 +39,7 @@ class Task extends Component {
         const month = date._d.getMonth()+1;
         const day = date._d.getDate();
         const formatedDate = year + "-" + month + "-" + day;
-        this.setState({
-            deadline: formatedDate
-        });
+
         console.log(formatedDate);
 ;        const task = {
             id: this.props.task.id,
@@ -62,17 +67,6 @@ class Task extends Component {
         event.preventDefault();
     }
 
-    doneIt = (event) => {
-        const task = {
-            id: this.props.task.id,
-            name: this.props.task.name,
-            done: event.target.checked,
-            deadline: this.props.task.deadline,
-            project_id: this.props.task.project_id
-        };
-        this.props.editTask(task);
-    }
-
     delete = () => {
         this.props.deleteTask(this.props.task.id);
     }
@@ -89,21 +83,19 @@ class Task extends Component {
         return(
             <li style={style} className="Task">
                 <input type="checkbox"
-                    name="done"
-                    checked={this.state.done}
-                    onClick={this.doneIt}
+                    checked={this.props.task.done}
                     onChange={this.handleInputChange} />
                 {this.props.editingTaskId === this.props.task.id ? 
                     <EditTaskForm
                     edit={this.edit}/> :
                     this.props.task.name}
-                <button onClick={this.showForm}>Edit Task</button>
+                <button onClick={this.showForm} disabled={this.props.task.done}>Edit Task</button>
                     {this.props.task.deadline ? <Deadline 
                         deadline={this.props.task.deadline}/> : null}
                 <button onClick={this.delete}>Delete Task</button>
                 <DragHandle />
                 <DatePicker
-                    customInput={<DeadlinePicker />}
+                    customInput={<DeadlinePicker dis={this.props.task.done}/>}
                     onSelect={this.handleSelectDeadline}
                     />
             </li>
