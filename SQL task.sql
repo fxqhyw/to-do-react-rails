@@ -16,12 +16,12 @@ SELECT tasks.* FROM tasks, projects WHERE projects.name LIKE 'N%' AND tasks.proj
 -- and show the tasts count near each project. mention that there can exist projects without 
 -- tasks and tasks with project_id=NULL
 SELECT projects.id, projects.name, COUNT(*) AS tasks_count FROM projects, tasks
-    WHERE tasks.project_id = projects.id AND projects.name LIKER '%a%'
+    WHERE projects.name LIKE '%a%' AND tasks.project_id = projects.id
     GROUP BY projects.id;
 
 -- 6. get the list of tasks with duplicate names. order aplphabetically
-SELECT tasks.name, COUNT(*) AS duplicate_list FROM tasks GROUP BY tasks.name HAVING  COUNT(tasks.name) > 1 
-    ORDER BY tasks.name ASC;
+SELECT name, COUNT(*) FROM tasks GROUP BY name HAVING  COUNT(*) > 1 
+    ORDER BY name ASC;
 
 -- 7. get the list of tasks having several exact matches of both name and status, from the project 'Garage'.
 -- order by matches count
