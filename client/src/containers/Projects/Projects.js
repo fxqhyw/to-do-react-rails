@@ -14,6 +14,7 @@ class Projects extends Component {
         this.state = {
             term: '',
             user_id: '',
+            showAddForm: false,
             editingProjectId: null,
             editingTaskId: null,
             projects: [],
@@ -45,6 +46,10 @@ class Projects extends Component {
         this.setState({term: event.target.value});
     }
 
+    showAddForm = () => {
+        this.setState({showAddForm: true});
+    }
+
     addProjectHandler = (event) => {
         event.preventDefault();
         const user_id = this.state.user_id;
@@ -62,7 +67,8 @@ class Projects extends Component {
                 $splice: [[0, 0, response.data]]
             });
                 this.setState({projects: projects,
-                    term: ''});
+                    term: '',
+                    showAddForm: false});
             })
             .catch(error => console.log(error));
     }
@@ -150,11 +156,8 @@ class Projects extends Component {
 
     render() {        
         return (
+        <section>
             <div>
-                {this.state.user_id ? <ProjectForm 
-                                        onSubmit={this.addProjectHandler}
-                                        onChange={this.handleChange}
-                                        value={this.state.term}/> : null}
                 {this.state.projects.map((project, i) => {
                         return (
                             <Project 
@@ -175,6 +178,19 @@ class Projects extends Component {
                         );
                 })}
             </div>
+            {this.state.showAddForm
+                ?
+                    <ProjectForm 
+                    onSubmit={this.addProjectHandler}
+                    onChange={this.handleChange}
+                    value={this.state.term}
+                    /> 
+                :
+                    <button className="add-button" onClick={this.showAddForm}>
+                        <i className="fas fa-plus"></i><span>Add TODO List</span>
+                    </button>
+            }
+        </section>
                        
         );
     }

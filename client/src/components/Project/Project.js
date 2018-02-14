@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { SortableContainer } from 'react-sortable-hoc';
 
 import Tasks from './Tasks/Tasks';
-import TaskForm from './TaskForm/TaskForm';
 import EditProjectForm from './EditProjectForm/EditProjectForm';
-import './Project.css';
 
 
 
@@ -46,12 +44,12 @@ class Project extends Component {
     } 
 
     editProject = (event) => {
+        event.preventDefault();
         const project = {
             id: this.props.projectId,
             name: event.target.value,
         };
         this.props.editProject(project);
-        event.preventDefault();
     }
 
 
@@ -71,16 +69,25 @@ class Project extends Component {
         });
     
         return (
-            <div className="Project">                
-                {this.props.editingProjectId === this.props.projectId ? 
-                    <EditProjectForm editProject={this.editProject}/> 
-                    : this.props.name}
-                <button onClick={this.deleteProject}>DELETE</button>
-                <button onClick={this.showEditProjectForm}>EDIT</button>
-                <TaskForm 
-                    onSubmit={this.submitTaskHandler}
-                    onChange={this.handleChange}
-                    value={this.state.term}/>
+            <div className="todo-list">
+                <div className="todo-list__header">                
+                    <i className="fas fa-calendar-alt"></i>
+                    {this.props.editingProjectId === this.props.projectId ? 
+                        <EditProjectForm editProject={this.editProject} value={this.props.name}/>
+                        : <h1>{this.props.name}</h1>}
+                    <div className="params"><a className="todo-list__header--edit" onClick={this.showEditProjectForm}>
+                        <i className="fas fa-pencil-alt"></i></a>
+                        <a className="todo-list__header--clear" onClick={this.deleteProject}><i className="fas fa-trash-alt"></i></a>
+                    </div>
+                </div>
+                <div className="todo-list__search"><i className="fas fa-plus"></i>
+                    <div className="todo-list__search--params">
+                        <form onSubmit={this.submitTaskHandler} >
+                            <input type="text" onChange={this.handleChange} value={this.state.term}/>
+                            <button type="submit" disabled={!this.state.term}><span>Add task</span></button>
+                        </form>
+                    </div>
+                </div>
                 <SortableList tasks={this.props.tasks} useDragHandle={true}/>                    
             </div>
         );
