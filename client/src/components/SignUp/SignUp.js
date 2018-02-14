@@ -37,9 +37,13 @@ class SignUp extends Component {
             }    
         )
         .then(response => {
-            alert("You are successfuly register");
+            alert("j");
+            console.log(response);
         })
-        .catch(error => console.log(error));
+        .then(() => this.props.history.push('/'))
+        .catch(error => {console.log(error);
+             alert(error.response.data.message);
+        });
     }
 
     validateField = (fieldName, value) => {

@@ -1,3 +1,18 @@
 .App {
     text-align: center;
 }
+
+body {
+    background-image: url("./img/bg.jpg");
+    background-size: cover; 
+}
+
+.container-fluid {
+        padding-right: 0;
+        padding-left: 0;
+}
+
+.App-container {
+        width: 100%; 
+ }
+

@@ -6,14 +6,10 @@ module Api::V1
        json_response(@user)
    end
 
-    def create
-      @input = User.new(user_params)
-      if(@input.save)
-        :ok
-      else
-        :bad_request
-      end
-    end
+   def create
+    @user = User.create!(user_params)
+    json_response(@user)
+  end
 
     private
       def user_params

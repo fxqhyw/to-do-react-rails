@@ -9,7 +9,6 @@ export default () =>
   <Switch>
     <Route path="/" exact component={Login} />
     <Route path="/welcome" exact component={Projects} />
-    <Route path="/login" exact component={Login} />
     <Route path="/signup" exact component={SignUp} />
 
     { /* Finally, catch all unmatched routes */ }

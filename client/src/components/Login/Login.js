@@ -6,7 +6,8 @@ class Login extends Component {
 
     state = {
         email: '',
-        password: ''
+        password: '',
+        showError: false
     };
     componentWillMount = () => {
         if (window.localStorage.getItem('jwt')) {
@@ -33,12 +34,16 @@ class Login extends Component {
             window.localStorage.setItem('jwt', res.jwt);
         })
         .then(() => this.props.history.push('/welcome'))
-        .catch((error) => console.log('There is an error: ', error.massage));
+        .catch((error) => {console.log( error);
+            this.setState({showError: true});
+            });
     }
 
     render() {
+
         return(
             <div className="Login">
+                {this.state.showError ? <p>Incorrect email or password</p> : null}
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="email" bsSize="large">
                         <ControlLabel>Email</ControlLabel>
@@ -59,8 +64,10 @@ class Login extends Component {
                         />
                     </FormGroup>
                     <Button type="submit"
+                    bsStyle="primary"
                     block
-                    bsSize="large">
+                    bsSize="large"
+                    >
                         Login
                     </Button>
                 </form>
