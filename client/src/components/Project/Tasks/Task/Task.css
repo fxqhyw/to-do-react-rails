@@ -1,12 +1,62 @@
-.Task {
-    text-align: center;
-    -webkit-flex: none;
-    flex: none;
-    width: 50%;
-    margin: 5px;
-    background: plum;
-    float: none;
-    font-size: 11px;
-    text-align: left;
-    padding: 10px;
-  }
+.task {
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+    width: 800px;
+    list-style-type: none;
+}
+
+.task .name {
+        width: 70%;
+        display: inline-block;
+        font-size: 16px;
+        line-height: 60px;
+        border-left: 1px solid lightgrey;
+        border-right: 1px solid lightgrey;
+        padding: 0 20px;
+        color: #4c4c4c;
+        text-align: left;}
+        .task:last-child {
+            border-bottom: none;
+            border-radius: 0 0 10px 10px; }
+        .task .editTaskForm {
+            width: 70%;
+        display: inline-block;
+        font-size: 16px;
+        line-height: 30px; 
+        padding: 0 20px;
+        border-left: 1px solid lightgrey;
+        border-right: 1px solid lightgrey;
+         text-align: left;}
+        .task input[type=checkbox] {
+            display: inline-block;
+            width: 10%;
+            height: 20px; } 
+        .task  .name span {
+            float: right;
+            color: gray; }
+             .task:hover {
+                background-color: lightgoldenrodyellow; }
+                .task:hover .params {
+                    display: inline-block; } 
+             .task .params {
+                display: none;
+                width: 18%;
+                text-align: center;
+                padding: 0 20px;
+                transition: all 0.3s ease-in; }
+                 .task .params a {
+                    padding: 0 10px;
+                    display: inline-block;
+                    border-right: 1px solid lightgrey; }
+                     .task .params a:last-child {
+                        border-right: none; }
+                         .task .params a i {
+                            font-size: 18px;
+                            color: #6d0000;
+                            transition: all 0.3s ease-in; }
+                             .task .params a i:hover {
+                                color: #d7d7d7; }
+

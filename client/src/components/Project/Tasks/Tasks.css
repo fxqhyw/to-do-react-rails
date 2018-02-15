@@ -1,8 +1,6 @@
-li.placeholder {
-    background: rgb(255,240,120);
-}
-
-li.placeholder:before {
-  content: "Drop here";
-  color: rgb(225,210,90);
-}
+.tasks {
+    list-style-type: none;
+    padding-bottom: 0;
+    border-radius: 0 0 10px 10px;
+    background-color: #ffffff;
+    border: 1px solid lightgrey; }

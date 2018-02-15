@@ -5,6 +5,8 @@ import jwtDecode from 'jwt-decode';
 
 import Project from '../../components/Project/Project';
 import ProjectForm from '../../components/ProjectForm/ProjectForm';
+import { arrayMove } from 'react-sortable-hoc';
+
 
 
 class Projects extends Component {
@@ -153,12 +155,19 @@ class Projects extends Component {
         })
         .catch(error => console.log(error))
     }
-
+    onSortEnd = ({oldIndex, newIndex}) => {
+        this.setState({
+          tasks: arrayMove(this.state.tasks, oldIndex, newIndex),
+        });
+    };
     render() {        
         return (
         <section>
-            <div>
+            <div className="base">
+                <h2>SIMPLE TODO LISTS</h2>
+                <h4>FOR RUBY GARAGE</h4>
                 {this.state.projects.map((project, i) => {
+
                         return (
                             <Project 
                             key={i}
@@ -174,7 +183,8 @@ class Projects extends Component {
                             editProject={this.editProjectHandler}
                             editTask={this.editTaskHandler}
                             editingProjectId={this.state.editingProjectId}
-                            editingTaskId={this.state.editingTaskId} />
+                            editingTaskId={this.state.editingTaskId} 
+                            onSortEnd={this.onSortEnd}/>
                         );
                 })}
             </div>

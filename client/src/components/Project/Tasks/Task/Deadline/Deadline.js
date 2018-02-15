@@ -1,9 +1,9 @@
 import React from 'react';
 
 const deadline = (props) => (
-    <div>
-        {props.deadline.toString()}
-    </div>
+    <span>
+        <em>{props.deadline.toString()}</em>
+    </span>
 );
 
 export default deadline;

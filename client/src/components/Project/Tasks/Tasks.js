@@ -1,40 +1,45 @@
 import React, { Component } from 'react';
-import { SortableElement } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import Task from './Task/Task';
 import './Tasks.css';
 
 class Tasks extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {            
-            term: '',
-        };
+
+    onSortEnd = ({oldIndex, newIndex}) => {
+        this.props.onSortEnd({oldIndex, newIndex}); 
     }
 
     render () {
+        const SortableList = SortableContainer(({tasks}) => {       
+            return (              
+                <ul className="tasks">                    
+                    {tasks.map((task, i) => {
+                            if (task.project_id === this.props.projectId) {
+                                return (
+                                    <SortableItem key={`item-${i}`} task={task} index={i} />
+                                );
+                            }
+                            return null;
+                        })
+                    }
+                </ul>
+            );
+        });
+
         const SortableItem = SortableElement(({task}) => {
-            return (
-                <Task 
+            return (                
+                    <Task 
                     task={task}
                     deleteTask={this.props.deleteTask}
                     editTask={this.props.editTask}
                     showEditForm={this.props.showEditTaskForm}
-                    editingTaskId={this.props.editingTaskId}/>
+                    editingTaskId={this.props.editingTaskId}/>                
             );
         });
 
         return (
-            <ul >
-                {this.props.tasks.map((task, i) => {
-                    if (task.project_id === this.props.projectId) {
-                        return (
-                            <SortableItem key={`item-${i}`} task={task} index={i} />
-                        );
-                    }
-                    return null;
-                })}
-            </ul>
+            <SortableList tasks={this.props.tasks} useDragHandle={true} onSortEnd={this.onSortEnd} />
         );
     }
 }

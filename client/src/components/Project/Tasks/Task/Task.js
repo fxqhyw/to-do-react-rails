@@ -3,10 +3,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import { SortableHandle } from 'react-sortable-hoc';
 
-import './Task.css';
 import EditTaskForm from './EditTaskForm/EditTaskForm';
 import Deadline from './Deadline/Deadline';
 import DeadlinePicker from './DeadlinePicker/DeadlinePicker';
+import "./Task.css";
 
 class Task extends Component {
     constructor(props) {
@@ -78,26 +78,28 @@ class Task extends Component {
                 textDecoration: 'line-through'};
         }
         
-        const DragHandle = SortableHandle(() => <span>::</span>);
+        const DragHandle = SortableHandle(() => <span><i className="fas fa-arrows-alt-v"></i></span>);
 
         return(
-            <li style={style} className="Task">
-                <input type="checkbox"
+            <li className="task" >
+                <input type="checkbox" 
                     checked={this.props.task.done}
                     onChange={this.handleInputChange} />
                 {this.props.editingTaskId === this.props.task.id ? 
                     <EditTaskForm
-                    edit={this.edit}/> :
-                    this.props.task.name}
-                <button onClick={this.showForm} disabled={this.props.task.done}>Edit Task</button>
-                    {this.props.task.deadline ? <Deadline 
-                        deadline={this.props.task.deadline}/> : null}
-                <button onClick={this.delete}>Delete Task</button>
-                <DragHandle />
-                <DatePicker
+                    edit={this.edit}
+                    name={this.props.task.name}/>  :
+                <span className="name" style={style}>{this.props.task.name} {this.props.task.deadline ? <Deadline 
+                deadline={this.props.task.deadline}/> : null }</span> }
+                    <div className="params">
+                    <DragHandle />
+                    <a onClick={this.showForm} disabled={this.props.task.done}><i disabled={this.props.task.done} className="fas fa-pencil-alt" ></i></a>
+                    <a onClick={this.delete}><i className="fas fa-trash-alt" ></i></a>                           
+                    </div>
+                    <DatePicker 
                     customInput={<DeadlinePicker dis={this.props.task.done}/>}
                     onSelect={this.handleSelectDeadline}
-                    />
+                    />    
             </li>
         );
     }

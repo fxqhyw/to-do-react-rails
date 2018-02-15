@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { SortableContainer } from 'react-sortable-hoc';
 
 import Tasks from './Tasks/Tasks';
+import './Project.css';
 import EditProjectForm from './EditProjectForm/EditProjectForm';
 
 
@@ -13,11 +13,15 @@ class Project extends Component {
         this.state = {
             term: ''
         };
-    
-    this.handleChange = this.handleChange.bind(this);
-    this.submitTaskHandler = this.submitTaskHandler.bind(this);
-}
+          
+        this.handleChange = this.handleChange.bind(this);
+        this.submitTaskHandler = this.submitTaskHandler.bind(this);
+    }
 
+
+    onSortEnd = ({oldIndex, newIndex}) => {
+        this.props.onSortEnd({oldIndex, newIndex});
+    }
 
     handleChange = (event) => {
         this.setState({term: event.target.value});
@@ -34,6 +38,7 @@ class Project extends Component {
         this.setState({term: ''});
         event.preventDefault();
     }
+
 
     deleteProject = () => {
        this.props.deleteProject(this.props.projectId);
@@ -52,21 +57,7 @@ class Project extends Component {
         this.props.editProject(project);
     }
 
-
     render () {
-
-        const SortableList = SortableContainer(({tasks}) => {          
-        
-            return (            
-                <Tasks 
-                projectId={this.props.projectId} 
-                tasks={this.props.tasks}
-                deleteTask={this.props.deleteTask}
-                editTask={this.props.editTask}
-                showEditTaskForm={this.props.showEditTaskForm}
-                editingTaskId={this.props.editingTaskId}/> 
-            );
-        });
     
         return (
             <div className="todo-list">
@@ -83,15 +74,24 @@ class Project extends Component {
                 <div className="todo-list__search"><i className="fas fa-plus"></i>
                     <div className="todo-list__search--params">
                         <form onSubmit={this.submitTaskHandler} >
-                            <input type="text" onChange={this.handleChange} value={this.state.term}/>
+                            <input type="text" onChange={this.handleChange} value={this.state.term}
+                                placeholder="Start typing here to creae a task..."/>
                             <button type="submit" disabled={!this.state.term}><span>Add task</span></button>
                         </form>
                     </div>
                 </div>
-                <SortableList tasks={this.props.tasks} useDragHandle={true}/>                    
+                <Tasks 
+                 projectId={this.props.projectId} 
+                 tasks={this.props.tasks}
+                 deleteTask={this.props.deleteTask}
+                 editTask={this.props.editTask}
+                 showEditTaskForm={this.props.showEditTaskForm}
+                 editingTaskId={this.props.editingTaskId}
+                 onSortEnd={this.onSortEnd}/>              
             </div>
         );
     }
+    
 }
 
 export default Project;
