@@ -1,8 +1,8 @@
 # TODO list
 ## About
-### Simple todo list with React front-end and Rails api
-### Authentication with JWT
-### Basic tests with RSpec
+#### Simple todo list with React front-end and Rails api
+#### Authentication with JWT
+#### Basic tests with RSpec
 ## Installing
 ### Rails
 * ```bundle install```
