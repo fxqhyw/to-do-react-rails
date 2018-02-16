@@ -49,8 +49,7 @@ body {
 main {
     overflow: hidden; } 
 .base h2, h4{
-    text-align: center;
-}     
+    text-align: center; }     
 .add-button {
     display: block;
     margin-top: 10px;
@@ -66,7 +65,7 @@ main {
     background-color: rgb(38, 69, 104) }
 .add-button > .fa-plus {
     font-size: 24px;
-    color: #131b86d3; }
+    color: #0e146bd3; }
 .add-button span {
     font-size: 20px;
     line-height: 50px;

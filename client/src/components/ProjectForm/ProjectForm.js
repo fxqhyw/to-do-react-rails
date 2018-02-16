@@ -1,12 +1,7 @@
 import React from 'react';
-
 import { FormGroup, FormControl } from "react-bootstrap";
-// import './ProjectForm.css';
 
-
-
-const projectForm = (props) => (
-    
+const projectForm = (props) => (    
     <form onSubmit={props.onSubmit} onBlur={props.onSubmit} className="project-form">
         <FormGroup bsSize="large">
             <FormControl

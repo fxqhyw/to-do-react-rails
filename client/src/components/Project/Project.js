@@ -4,8 +4,6 @@ import Tasks from './Tasks/Tasks';
 import './Project.css';
 import EditProjectForm from './EditProjectForm/EditProjectForm';
 
-
-
 class Project extends Component { 
 
     constructor(props) {
@@ -17,7 +15,6 @@ class Project extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.submitTaskHandler = this.submitTaskHandler.bind(this);
     }
-
 
     onSortEnd = ({oldIndex, newIndex}) => {
         this.props.onSortEnd({oldIndex, newIndex});
@@ -57,8 +54,7 @@ class Project extends Component {
         this.props.editProject(project);
     }
 
-    render () {
-    
+    render () {    
         return (
             <div className="todo-list">
                 <div className="todo-list__header">                
@@ -90,8 +86,7 @@ class Project extends Component {
                  onSortEnd={this.onSortEnd}/>              
             </div>
         );
-    }
-    
+    }    
 }
 
 export default Project;

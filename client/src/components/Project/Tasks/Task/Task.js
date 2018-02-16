@@ -92,14 +92,17 @@ class Task extends Component {
                 <span className="name" style={style}>{this.props.task.name} {this.props.task.deadline ? <Deadline 
                 deadline={this.props.task.deadline}/> : null }</span> }
                     <div className="params">
-                    <DragHandle />
-                    <a onClick={this.showForm} disabled={this.props.task.done}><i disabled={this.props.task.done} className="fas fa-pencil-alt" ></i></a>
-                    <a onClick={this.delete}><i className="fas fa-trash-alt" ></i></a>                           
+                        <DragHandle />
+                        <div className="datePicker">
+                            <DatePicker 
+                            customInput={<DeadlinePicker dis={this.props.task.done}/>}
+                            onSelect={this.handleSelectDeadline}
+                            /> 
+                        </div>
+                        <span onClick={this.showForm} ><i className="fas fa-pencil-alt" ></i></span>
+                        <span className="trash" onClick={this.delete}><i className="fas fa-trash-alt" ></i></span>                    
                     </div>
-                    <DatePicker 
-                    customInput={<DeadlinePicker dis={this.props.task.done}/>}
-                    onSelect={this.handleSelectDeadline}
-                    />    
+  
             </li>
         );
     }
