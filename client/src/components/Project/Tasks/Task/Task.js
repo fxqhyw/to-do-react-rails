@@ -41,7 +41,7 @@ class Task extends Component {
         const formatedDate = year + "-" + month + "-" + day;
 
         console.log(formatedDate);
-;        const task = {
+        const task = {
             id: this.props.task.id,
             name: this.props.task.name,
             done: this.props.task.done,
