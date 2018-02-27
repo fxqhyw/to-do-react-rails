@@ -14,8 +14,7 @@ class Task extends Component {
     
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectDeadline = this.handleSelectDeadline.bind(this);
-
-      }
+    }
 
     handleInputChange = (event) => {
         event.preventDefault();
@@ -101,8 +100,7 @@ class Task extends Component {
                         </div>
                         <span onClick={this.showForm} ><i className="fas fa-pencil-alt" ></i></span>
                         <span className="trash" onClick={this.delete}><i className="fas fa-trash-alt" ></i></span>                    
-                    </div>
-  
+                    </div>  
             </li>
         );
     }

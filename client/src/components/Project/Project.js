@@ -25,11 +25,14 @@ class Project extends Component {
     }
 
     submitTaskHandler = (event) => {
+        const priority =  this.props.tasks.length+1;
+
         const task = {
             name: this.state.term,
             done: false,
             deadline: null,
-            project_id: this.props.projectId
+            project_id: this.props.projectId,
+            priority: priority
         };
         this.props.submitTask(task);
         this.setState({term: ''});

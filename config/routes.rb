@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :show] do
         resources :projects
         resources :tasks
+        put 'tasks', to: 'tasks#update_priority'
       end
     end
   end

@@ -7,12 +7,13 @@
     width: 799px;
     list-style-type: none;}
  .task .name {
+    min-height: 60px;
     width: 72%;
     display: inline-block;
     font-size: 16px;
     line-height: 60px;
-    border-left: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
+     border-left: 1px solid lightgrey; 
+     border-right: 1px solid lightgrey; 
     padding: 0 20px;
     color: #4c4c4c;
     text-align: left; }
@@ -20,14 +21,19 @@
     border-bottom: none;
     border-radius: 0 0 10px 10px; }
 .task .editTaskForm {
-    width: 70%;
+    width: 72%;
     display: inline-block;
-    font-size: 16px;
+    vertical-align: top;
+        font-size: 16px;
+    line-height: 60px; 
+     padding: 0 20px; 
+     line-height: 60px;
+     border-left: 1px solid lightgrey; 
+     border-right: 1px solid lightgrey; }
+.task .editTaskForm input {
+    text-align: left;
     line-height: 30px; 
-    padding: 0 20px;
-    border-left: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
-    text-align: left;}
+    width: 80%; }
 .task input[type=checkbox] {
     display: inline-block;
     width: 10%;
@@ -67,7 +73,7 @@
     color: #757373;
     transition: all 0.3s ease-in;}
 .task .datePicker .fa-calendar-alt:hover {
-    color: #474747;  }                            
+    color: #474747;  }                             
                                
                              
 

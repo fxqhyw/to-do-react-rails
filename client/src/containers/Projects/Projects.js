@@ -85,9 +85,11 @@ class Projects extends Component {
         )
         .then(response => {
         console.log(response);
-        const tasks = update(this.state.tasks, {
-            $splice: [[0, 0, response.data]]
-        });
+        // const tasks = update(this.state.tasks, {
+        //     $splice: [[0, 0, response.data]]
+        // });
+        const tasks = this.state.tasks;
+        tasks.push(response.data);
         this.setState({tasks: tasks});
         })
         .catch(error => console.log(error));
@@ -122,7 +124,11 @@ class Projects extends Component {
         const user_id = this.state.user_id;
         axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${task.id}`,
         {
-            task: task
+            task: {
+                name: task.name,
+                done: task.done,
+                deadline: task.deadline,
+            }
         })
         .then(response => {
             console.log(response);
@@ -140,9 +146,14 @@ class Projects extends Component {
         .then(response => {
             const projectIndex = this.state.projects.findIndex(x => x.id === id);
             const projects = update(this.state.projects, {$splice: [[projectIndex, 1]]});
-            this.setState({projects: projects})
+            this.setState({projects: projects});
+            axios.get(`http://localhost:3001/api/v1/users/${user_id}/tasks`)
+            .then(response => {
+                this.setState({tasks: response.data})
+            })
+            .catch(error => console.log(error));
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log(error));
     }
 
     deleteTaskHandler = (id) => {
@@ -155,11 +166,96 @@ class Projects extends Component {
         })
         .catch(error => console.log(error))
     }
+
     onSortEnd = ({oldIndex, newIndex}) => {
-        this.setState({
-          tasks: arrayMove(this.state.tasks, oldIndex, newIndex),
-        });
-    };
+        const user_id = this.state.user_id;
+
+        const touchedTask = this.state.tasks[oldIndex];
+        const replacableTask = this.state.tasks[newIndex];
+        const id1 = touchedTask.id;
+        const id2 = replacableTask.id;
+        let futurePriority = newIndex+1;
+
+        if (( newIndex === oldIndex+1 || newIndex+1 === oldIndex ) &&  (newIndex !== oldIndex))  {
+            this.setState({
+                tasks: arrayMove(this.state.tasks, oldIndex, newIndex)
+            });
+            axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${id1}`,
+                {
+                    task: {
+                        priority: futurePriority
+                    }
+            })
+            .then(response => {
+                axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${id2}`,
+                    {
+                        task: {
+                            priority: touchedTask.priority
+                        }
+                    })
+            })
+            .then(response => {
+
+            })
+            .catch(error => console.log(error)); 
+        }
+    //        else if (!(touchedTask.priority === replacableTask.priority) || newIndex > oldIndex) {
+    //           axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${id1}`,
+    //               {
+    //                   task: {
+    //                       priority: futurePriority
+    //                   }
+    //           })
+    //           .then(response => {
+    //             axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${id2}`,
+    //                 {
+    //                     task: {
+    //                         priority: replacableTask.priority - 1
+    //                     }
+    //                 })
+    //         })
+    //           .then(response => {
+    //               this.setState({
+    //                   tasks: arrayMove(this.state.tasks, oldIndex, newIndex)
+    //               });
+    //           })
+    //           .catch(error => console.log(error)); 
+
+    //     } else if (!(touchedTask.priority === replacableTask.priority) || newIndex < oldIndex) {
+    //         axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${id1}`,
+    //             {
+    //                 task: {
+    //                     priority: futurePriority
+    //                 }
+    //         })
+    //         .then(response => {
+    //           axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${id2}`,
+    //               {
+    //                   task: {
+    //                       priority: replacableTask.priority + 1
+    //                   }
+    //               })
+    //       })
+    //         .then(response => {
+    //             this.setState({
+    //                 tasks: arrayMove(this.state.tasks, oldIndex, newIndex)
+    //             });
+    //         })
+    //         .catch(error => console.log(error)); 
+    //   } else {
+    //     this.setState({
+    //         tasks: arrayMove(this.state.tasks, oldIndex, newIndex)
+    //     });
+    //     axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${id1}`,
+    //         {
+    //             task: {
+    //                 priority: futurePriority
+    //             }
+    //     })
+    //     .catch(error => console.log(error));
+    //   }           
+    }
+
     render() {        
         return (
         <section>

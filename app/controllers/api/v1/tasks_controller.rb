@@ -5,7 +5,8 @@ module Api::V1
 
 
     def index
-      @tasks = @user.tasks.order("created_at DESC")
+      @tasks = @user.tasks.order(:priority)
+
       json_response(@tasks)
     end
 
@@ -26,7 +27,7 @@ module Api::V1
 
     private
       def task_params
-        params.require(:task).permit(:id, :name, :done, :deadline, :project_id)
+        params.require(:task).permit(:id, :name, :done, :deadline, :project_id, :priority)
       end
 
       def set_user

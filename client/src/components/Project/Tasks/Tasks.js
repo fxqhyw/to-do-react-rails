@@ -7,7 +7,7 @@ import './Tasks.css';
 class Tasks extends Component {
 
     onSortEnd = ({oldIndex, newIndex}) => {
-        this.props.onSortEnd({oldIndex, newIndex}); 
+        this.props.onSortEnd({oldIndex, newIndex});
     }
 
     render () {
@@ -39,7 +39,7 @@ class Tasks extends Component {
         });
 
         return (
-            <SortableList tasks={this.props.tasks} useDragHandle={true} onSortEnd={this.onSortEnd} />
+            <SortableList tasks={this.props.tasks} useDragHandle={true} onSortEnd={this.onSortEnd} lockAxis="y"/>
         );
     }
 }
