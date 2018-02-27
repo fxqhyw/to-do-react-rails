@@ -28,7 +28,8 @@ class Task extends Component {
             name: this.props.task.name,
             done: done,
             deadline: this.props.task.deadline,
-            project_id: this.props.task.project_id
+            project_id: this.props.task.project_id,
+            priority: this.props.task.priority
         };
         this.props.editTask(task);
     }

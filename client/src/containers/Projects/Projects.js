@@ -124,11 +124,7 @@ class Projects extends Component {
         const user_id = this.state.user_id;
         axios.put(`http://localhost:3001/api/v1/users/${user_id}/tasks/${task.id}`,
         {
-            task: {
-                name: task.name,
-                done: task.done,
-                deadline: task.deadline,
-            }
+            task: task
         })
         .then(response => {
             console.log(response);
